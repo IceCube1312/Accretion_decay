@@ -15,7 +15,6 @@ void particles_init(PARTICLE particles[NUM_PARTICLES]){
 		double z = (rand() % (2* RANDOM_METRIC))-RANDOM_METRIC;
 		particles[i].position=(Vector3){x,y,z};
 		particles[i].accel = Vector3Zero();
-		particles[i].mass = PARTICLE_MASS_CONST;
 
 		Vector3 r = Vector3Subtract(particles[i].position,Vector3Zero());
 		double rad = Vector3Length(r);
@@ -24,6 +23,11 @@ void particles_init(PARTICLE particles[NUM_PARTICLES]){
 		Vector3 velo_dir = Vector3CrossProduct(randomVec,r); //cross product of the position vector with any random vector will result in a vector perpendicular to position which suffices the condition for the particle's velocity
 		velo_dir = Vector3Normalize(velo_dir);
 		particles[i].velo = Vector3Scale(velo_dir,velo_mod);
+
+		for(int j=0;j<NUM_TRAIL;j++){
+			particles[i].trail[j] = particles[i].position;
+		}
+		particles[i].trail_head = 0;
 	}
 }
 
@@ -37,6 +41,9 @@ void updating_velo_accel_pos(PARTICLE particles[NUM_PARTICLES]){
 			particles[i].accel = Vector3Scale(dir_to_center, accel_scalar);
 			particles[i].velo = Vector3Add(particles[i].velo, Vector3Scale(particles[i].accel, dt));
 		}
+		particles[i].trail[particles[i].trail_head] = particles[i].position;
+		particles[i].trail_head = (particles[i].trail_head+1)%NUM_TRAIL;
+		
 		particles[i].position = Vector3Add(particles[i].position, Vector3Scale(particles[i].velo, dt));
 	}
 }
@@ -58,5 +65,17 @@ void checking_collisions_monte_carlo(PARTICLE particles[NUM_PARTICLES]){
 			particles[i].velo = Avg_velo;
 			particles[k].velo = Avg_velo;
 		}
+	}
+}
+
+void draw_trails(PARTICLE particle){
+        for(int j=0;j<NUM_TRAIL-1;j++){
+                int current_index = (particle.trail_head -1 - j + NUM_TRAIL) % NUM_TRAIL;
+                Vector3 current = particle.trail[current_index];
+                int prev_index = (particle.trail_head - 2 - j + NUM_TRAIL) % NUM_TRAIL;
+                Vector3 prev_point = particle.trail[prev_index];
+                double ratio = j/(double)NUM_TRAIL;
+                int G =  255 * (1-ratio);
+                DrawLine3D(current,prev_point,WHITE);
 	}
 }

@@ -20,7 +20,7 @@ int main(int argc, char** argv){
 
 	while(!WindowShouldClose()){
 		if(elapsed_time>=frame_time){
-			UpdateCamera(&cam, CAMERA_ORBITAL);
+			UpdateCamera(&cam, CAMERA_THIRD_PERSON);
 			BeginDrawing();
 			ClearBackground(TERMINAL_GREEN);
 			BeginMode3D(cam);
@@ -28,9 +28,10 @@ int main(int argc, char** argv){
 			DrawLine3D((Vector3){0,INF,0},(Vector3){0,NINF,0},BLUE);
 			DrawLine3D((Vector3){INF,0,0},(Vector3){NINF,0,0},RED);
 			updating_velo_accel_pos(particles);
-			checking_collisions_monte_carlo(particles);
+              		checking_collisions_monte_carlo(particles);
 			for(int i=0;i<NUM_PARTICLES;i++){
 				DrawPoint3D(particles[i].position, WHITE);
+				draw_trails(particles[i]);
 			}
 
 			EndMode3D();
