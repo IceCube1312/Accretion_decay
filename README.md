@@ -13,7 +13,6 @@ A minimal C-based physics simulation demonstrating the orbital decay of a 3D par
 ## Dependencies
 - `gcc`
 - `raylib`
-- `math.h`
 
 ## Build & Run
 #### For Linux - 
@@ -26,7 +25,7 @@ gcc accr.c main.c -lraylib -lm -o pl
 #### For Windows - 
 - Download the Raylib Windows Installer executable from the official Raylib GitHub repository.
 - Execute the installer. Retain the target directory C:\raylib.
-- Add a new enviornment varible at path - `C:\raylib\w64devkit\bin`.
+- Add a new enviornment varible and append the following to the path - `C:\raylib\w64devkit\bin`.
 - In the cloned repo run
 ```bash
 mingw32-make
