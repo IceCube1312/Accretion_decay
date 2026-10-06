@@ -16,7 +16,7 @@ A minimal C-based physics simulation demonstrating the orbital decay of a 3D par
 
 ## Build & Run
 #### For Linux - 
-Download raylib from you preferred package manager. 
+Download raylib from your preferred package manager. 
 ```bash
 gcc accr.c main.c -lraylib -lm -o pl
 ./pl
