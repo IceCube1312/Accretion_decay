@@ -1,24 +1,18 @@
-# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -std=c99 -O2 -I"C:/raylib/raylib/src"
-LDFLAGS = -L"C:/raylib/raylib/src"
-LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
+CFLAGS = -O2 -Wall -I C:\raylib\raylib\src
+LDFLAGS = -L C:\raylib\raylib\lib -lraylib -lopengl32 -lgdi32 -lwinmm
 
-# Target and objects
-TARGET = accretion.exe
-OBJS = main.o accr.o
+SRC = main.c accr.c
+OBJ = $(SRC:.c=.o)
+EXEC = accretion.exe
 
-# Default rule
-all: $(TARGET)
+all: $(EXEC)
 
-# Linking rule
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+$(EXEC): $(OBJ)
+	$(CC) $(OBJ) -o $@ $(LDFLAGS)
 
-# Compilation rule for .c to .o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Cleanup rule
 clean:
-	del /Q $(OBJS) $(TARGET)
+	del *.o $(EXEC)
