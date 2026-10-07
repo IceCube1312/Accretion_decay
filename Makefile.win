@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -O2 -Wall -I vendor/include
-LDFLAGS = -L vendor/lib -lraylib -lopengl32 -lgdi32 -lwinmm
+LDFLAGS = vendor/lib/libraylib.a -lopengl32 -lgdi32 -lwinmm
 
 SRC = main.c accr.c
 OBJ = $(SRC:.c=.o)
