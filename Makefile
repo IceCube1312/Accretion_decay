@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -O2 -Wall -I C:\raylib\raylib\src
-LDFLAGS = -L C:\raylib\raylib\lib -lraylib -lopengl32 -lgdi32 -lwinmm
+CFLAGS = -O2 -Wall -I vendor/include
+LDFLAGS = vendor/lib/libraylib.a -lopengl32 -lgdi32 -lwinmm
 
 SRC = main.c accr.c
 OBJ = $(SRC:.c=.o)
@@ -15,4 +15,4 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	del *.o $(EXEC)
+	rm -f *.o $(EXEC)

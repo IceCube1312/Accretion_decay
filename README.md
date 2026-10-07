@@ -28,6 +28,14 @@ gcc accr.c main.c -lraylib -lm -o pl
 - Add a new enviornment varible and append the following to the path - `C:\raylib\w64devkit\bin`.
 - In the cloned repo run
 ```bash
-mingw32-make
-accretion.exe
+make
+./accretion.exe
+```
+
+#### For macOS -
+Install raylib using Homebrew, then compile with `clang` and link the required Apple frameworks:
+```bash
+brew install raylib
+clang accr.c main.c -I$(brew --prefix raylib)/include -L$(brew --prefix raylib)/lib -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -o accretion
+./accretion
 ```
