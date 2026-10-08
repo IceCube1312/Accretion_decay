@@ -19,8 +19,9 @@ void particles_init(PARTICLE particles[NUM_PARTICLES]){
 		Vector3 r = Vector3Subtract(particles[i].position,Vector3Zero());
 		double rad = Vector3Length(r);
 		double velo_mod = sqrt(CENTRAL_MASS / rad);
-		Vector3 randomVec = {rand(),rand(),rand()};
-		Vector3 velo_dir = Vector3CrossProduct(randomVec,r); //cross product of the position vector with any random vector will result in a vector perpendicular to position which suffices the condition for the particle's velocity
+		Vector3 noise = Vector3Normalize((Vector3) {rand()-((RAND_MAX)/2),rand()-((RAND_MAX)/2),rand()-(RAND_MAX/2)});
+		Vector3 random_vector = Vector3Add(noise, SPIN_BIAS );
+		Vector3 velo_dir = Vector3CrossProduct(random_vector,r); //cross product of the position vector with any random vector will result in a vector perpendicular to position which suffices the condition for the particle's velocity
 		velo_dir = Vector3Normalize(velo_dir);
 		particles[i].velo = Vector3Scale(velo_dir,velo_mod);
 
@@ -37,7 +38,7 @@ void updating_velo_accel_pos(PARTICLE particles[NUM_PARTICLES]){
 		float dist = Vector3Length(particles[i].position);
 		if (dist > 0.1f) { 
 			Vector3 dir_to_center = Vector3Scale(particles[i].position, -1.0f / dist);
-			float accel_scalar = CENTRAL_MASS / (dist * dist);
+			float accel_scalar = CENTRAL_MASS / (1+(dist * dist));
 			particles[i].accel = Vector3Scale(dir_to_center, accel_scalar);
 			particles[i].velo = Vector3Add(particles[i].velo, Vector3Scale(particles[i].accel, dt));
 		}

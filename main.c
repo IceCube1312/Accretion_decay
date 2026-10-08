@@ -12,7 +12,8 @@ int main(int argc, char** argv){
 	Camera3D cam;
 	cam_init(&cam);
 
-	PARTICLE particles[NUM_PARTICLES];
+	PARTICLE *particles;
+	particles = malloc(sizeof(PARTICLE)*NUM_PARTICLES);
 	particles_init(particles);
 
 	double elapsed_time = ELAPSED_TIME_INITIALIZER;
