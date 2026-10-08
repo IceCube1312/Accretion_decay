@@ -23,19 +23,18 @@ gcc accr.c main.c -lraylib -lm -o pl
 ```
 
 #### For Windows - 
-- Download the Raylib Windows Installer executable from the official Raylib GitHub repository.
-- Execute the installer. Retain the target directory C:\raylib.
-- Add a new enviornment varible and append the following to the path - `C:\raylib\w64devkit\bin`.
-- In the cloned repo run
+- Download the **64-bit** version of `w64devkit` from its [official GitHub releases](https://github.com/skeeto/w64devkit/releases).
+- Extract the zip file and double-click `w64devkit.exe` to open the terminal.
+- Navigate to the cloned repo and run:
 ```bash
 make
 ./accretion.exe
 ```
 
 #### For macOS -
-Install raylib using Homebrew, then compile with `clang` and link the required Apple frameworks:
+Install raylib using Homebrew, then use the provided Mac Makefile:
 ```bash
 brew install raylib
-clang accr.c main.c -I$(brew --prefix raylib)/include -L$(brew --prefix raylib)/lib -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -o accretion
+make -f Makefile.mac
 ./accretion
 ```
