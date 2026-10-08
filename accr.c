@@ -38,7 +38,7 @@ void updating_velo_accel_pos(PARTICLE particles[NUM_PARTICLES]){
 		float dist = Vector3Length(particles[i].position);
 		if (dist > 0.1f) { 
 			Vector3 dir_to_center = Vector3Scale(particles[i].position, -1.0f / dist);
-			float accel_scalar = CENTRAL_MASS / (1+(dist * dist));
+			float accel_scalar = CENTRAL_MASS / (SOFTENING_FACTOR+(dist * dist));
 			particles[i].accel = Vector3Scale(dir_to_center, accel_scalar);
 			particles[i].velo = Vector3Add(particles[i].velo, Vector3Scale(particles[i].accel, dt));
 		}

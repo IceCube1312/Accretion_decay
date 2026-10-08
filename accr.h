@@ -27,6 +27,7 @@
 #define RAD_FACTOR 5
 #define NUM_TRAIL 2
 #define SPIN_BIAS (Vector3){0,0,1}
+#define SOFTENING_FACTOR 2000
 
 typedef struct particle{
 	Vector3 position;
