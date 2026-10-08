@@ -1,0 +1,18 @@
+CC = clang
+CFLAGS = -O2 -Wall -I/opt/homebrew/include -I/usr/local/include
+LDFLAGS = -L/opt/homebrew/lib -L/usr/local/lib -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+
+SRC = main.c accr.c
+OBJ = $(SRC:.c=.o)
+EXEC = accretion
+
+all: $(EXEC)
+
+$(EXEC): $(OBJ)
+	$(CC) $(OBJ) -o $@ $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f *.o $(EXEC)
