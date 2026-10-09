@@ -15,6 +15,8 @@ void particles_init(PARTICLE particles[NUM_PARTICLES]){
 		//initialize acceleration to zero
 
 		//give them all their orbital velocites (sqrt(GM/r)) in random orbital planes
+		//take the cross product of of their position vector with any random vector to get the direction of the random velocity
+		//but we want to have a bias to the total angular momentum so add the SPIB_BIAS macro to the normalized random vector
 
                 for(int j=0;j<NUM_TRAIL;j++){
                         particles[i].trail[j] = particles[i].position;
