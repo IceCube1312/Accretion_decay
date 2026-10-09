@@ -11,8 +11,14 @@ void cam_init(Camera3D* cam){
 void particles_init(PARTICLE particles[NUM_PARTICLES]){
         for(int i=0;i<NUM_PARTICLES;i++){
 		//initialize random positions for the current particle in the loop
+
+                double x = (rand() % (2* RANDOM_METRIC))-RANDOM_METRIC;
+                double y = (rand() % (2* RANDOM_METRIC))-RANDOM_METRIC;
+                double z = (rand() % (2* RANDOM_METRIC))-RANDOM_METRIC;
+                particles[i].position=(Vector3){x,y,z};
 	
 		//initialize acceleration to zero
+		particles[i].accel=Vector3Zero();
 
 		//give them all their orbital velocites (sqrt(GM/r)) in random orbital planes
 		//take the cross product of of their position vector with any random vector to get the direction of the random velocity
@@ -30,16 +36,19 @@ void updating_velo_accel_pos(PARTICLE particles[NUM_PARTICLES]){
         for(int i = 0; i < NUM_PARTICLES; i++){
                 float dist = Vector3Length(particles[i].position);
                 if (dist > 0.1f) {
-			// for distances sufficiently large enough (to not get crazy big accelerations) calculate the acceleration (with the softening parameter) and then update the velocity with euler integration given the time dt (dv = a * dt)
+                        Vector3 dir_to_center = Vector3Normalize(particles[i].position);
+                        dir_to_center = Vector3Scale(dir_to_center,-1);
+                        float accel_scalar = CENTRAL_MASS / (SOFTENING_FACTOR+(dist * dist));
+                        particles[i].accel = Vector3Scale(dir_to_center, accel_scalar);
+                        particles[i].velo = Vector3Add(particles[i].velo, Vector3Scale(particles[i].accel, dt));
                 }
-
-		//this is for generating the trails dont touch this
                 particles[i].trail[particles[i].trail_head] = particles[i].position;
                 particles[i].trail_head = (particles[i].trail_head+1)%NUM_TRAIL;
 
-		//update the position of the particle with euler integration (dx = v * dt)
+                particles[i].position = Vector3Add(particles[i].position, Vector3Scale(particles[i].velo, dt));
         }
 }
+
 
 void checking_collisions_monte_carlo(PARTICLE particles[NUM_PARTICLES]){
         for(int i=0;i<NUM_PARTICLES;i++){

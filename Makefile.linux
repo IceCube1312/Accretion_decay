@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -O2 -Wall -I vendor/include
-LDFLAGS = vendor/lib/libraylib.a -lopengl32 -lgdi32 -lwinmm
+LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
-SRC = main.c template.c
+SRC = main.c accr.c
 OBJ = $(SRC:.c=.o)
-EXEC = accretion.exe
+EXEC = accretion
 
 all: $(EXEC)
 
